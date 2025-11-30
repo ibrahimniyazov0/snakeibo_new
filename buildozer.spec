@@ -14,7 +14,7 @@ android.ndk = 25b
 android.archs = arm64-v8a,armeabi-v7a
 android.minapi = 21
 
-android.sdk_build_tools = 33.0.2
+android.sdk_build_tools = 30.0.3
 
 android.gradle_dependencies = com.google.android.gms:play-services-ads:23.0.0
 android.release = 1
@@ -22,4 +22,5 @@ android.build_tool = aab
 
 [buildozer]
 log_level = 2
+
 
