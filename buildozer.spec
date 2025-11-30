@@ -1,28 +1,37 @@
 [app]
-title = Snakeibo Oyunu
-package.name = com.snakeibo.oyun
-package.domain = com.snakeibo
-source.dir = .
-source.exclude_dirs = bin, build, __pycache__
-version = 1.0
-app.mainclass = snakeibo
-requirements = python3,kivy,kivmob,hostpython3,setuptools
-orientation = landscape
+
+title = Kivy Game
+
+package.name = kvgame
+
+package.domain = org.test
+
+version = 0.1
+
+requirements = python3,kivy,pillow
 
 android.api = 34
-android.ndk = 25c
-android.archs = arm64-v8a,armeabi-v7a
+
 android.minapi = 21
 
-android.sdk_build_tools = 29.0.3
+android.ndk = 25c
 
-android.gradle_dependencies = com.google.android.gms:play-services-ads:23.0.0
-android.release = 1
-android.build_tool = aab
+android.build_tools = 29.0.3
 
-[buildozer]
-log_level = 2
+fullscreen = 0
 
+android.permissions = INTERNET
 
+orientation = landscape
 
+export_orientation = landscape
 
+android.release = aab
+
+p4a.branch = develop
+
+p4a.kivy_fork = https://github.com/kivy/kivy
+
+android.archs = arm64-v8a,armeabi-v7a
+
+source.include_exts = py,png,jpg,kv,json,txt,atlas,so,a,dylib,wav
