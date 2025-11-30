@@ -34,4 +34,7 @@ p4a.kivy_fork = https://github.com/kivy/kivy
 
 android.archs = arm64-v8a,armeabi-v7a
 
+source.dir = .
+
 source.include_exts = py,png,jpg,kv,json,txt,atlas,so,a,dylib,wav
+
