@@ -8,7 +8,6 @@ version = 1.0
 app.mainclass = snakeibo
 requirements = python3,kivy,kivmob,hostpython3,setuptools
 orientation = landscape
-source.dir = .
 
 android.api = 33
 android.ndk = 25b
@@ -23,3 +22,4 @@ android.build_tool = aab
 
 [buildozer]
 log_level = 2
+
