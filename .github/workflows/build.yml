@@ -16,8 +16,8 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install Buildozer
-        run: pip install buildozer
+      - name: Install Dependencies (Cython + Buildozer)
+        run: pip install cython buildozer
 
       - name: Run Buildozer
         run: buildozer android release
@@ -40,4 +40,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Android-AAB-Fayl
-          path: oyun-snakeibo-release.aab 
+          path: oyun-snakeibo-release.aab
