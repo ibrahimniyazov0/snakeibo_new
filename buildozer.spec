@@ -10,11 +10,11 @@ requirements = python3,kivy,kivmob,hostpython3,setuptools
 orientation = landscape
 
 android.api = 34
-android.ndk = 25b
+android.ndk = 25c
 android.archs = arm64-v8a,armeabi-v7a
 android.minapi = 21
 
-android.sdk_build_tools = 30.0.3
+android.sdk_build_tools = 29.0.3
 
 android.gradle_dependencies = com.google.android.gms:play-services-ads:23.0.0
 android.release = 1
@@ -22,6 +22,7 @@ android.build_tool = aab
 
 [buildozer]
 log_level = 2
+
 
 
 
