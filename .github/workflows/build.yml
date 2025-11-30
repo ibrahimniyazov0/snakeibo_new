@@ -1,43 +1,87 @@
-name: Android AAB Build
+name: Build APK
+
+
 
 on:
-  push:
-    branches:
-      - main
+
+  workflow_dispatch:
+
+
 
 jobs:
-  build-android:
-    runs-on: ubuntu-latest
+
+  build:
+
+    runs-on: ubuntu-22.04
+
+
+
     steps:
-      - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.9'
+      - uses: actions/checkout@v3
 
-      - name: Install Dependencies (Cython + Buildozer)
-        run: pip install cython buildozer
 
-      - name: Run Buildozer
-        run: buildozer android release
 
-      - name: Find and Rename AAB
-        id: find_aab
+      - name: Install system packages
+
         run: |
-          AAB_FILE=$(find bin/ -name '*-release.aab' | head -n 1)
-          if [ -n "$AAB_FILE" ]; then
-            NEW_NAME="oyun-snakeibo-release.aab"
-            mv "$AAB_FILE" "$NEW_NAME"
-            echo "AAB_NAME=$NEW_NAME" >> $GITHUB_OUTPUT
-            echo "AAB_YOLU=$NEW_NAME"
-          else
-            echo "AAB file not found."
-            exit 1
-          fi
-        
-      - name: Upload AAB Artifact
-        uses: actions/upload-artifact@v4
+
+          sudo apt update
+
+          sudo apt install -y python3 python3-pip openjdk-17-jdk zip unzip
+
+          pip install --upgrade pip
+
+          pip install buildozer cython virtualenv
+
+
+
+      - name: Install Android SDK & NDK
+
+        run: |
+
+          mkdir -p $HOME/.buildozer/android/platform
+
+          cd $HOME/.buildozer/android/platform
+
+          
+
+          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+
+          unzip commandlinetools-linux-9477386_latest.zip -d cmdline-tools
+
+          mkdir -p cmdline-tools/latest
+
+          mv cmdline-tools/bin cmdline-tools/lib cmdline-tools/latest/
+
+
+
+          export ANDROID_HOME=$HOME/.buildozer/android/platform
+
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+
+          yes | sdkmanager --licenses
+
+          sdkmanager "platform-tools" "platforms;android-34" "build-tools;30.0.3" "ndk;21.4.7075529"
+
+
+
+      - name: Build APK
+
+        run: |
+
+          export ANDROID_HOME=$HOME/.buildozer/android/platform
+
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+
+          buildozer android debug
+
+
+
+      - uses: actions/upload-artifact@v3
+
         with:
-          name: Android-AAB-Fayl
-          path: oyun-snakeibo-release.aab
+
+          name: apk
+
+          path: bin/*.apk
