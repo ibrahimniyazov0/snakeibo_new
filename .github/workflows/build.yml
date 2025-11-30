@@ -1,0 +1,43 @@
+name: Android AAB Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Buildozer
+        run: pip install buildozer
+
+      - name: Run Buildozer
+        run: buildozer android release
+
+      - name: Find and Rename AAB
+        id: find_aab
+        run: |
+          AAB_FILE=$(find bin/ -name '*-release.aab' | head -n 1)
+          if [ -n "$AAB_FILE" ]; then
+            NEW_NAME="oyun-snakeibo-release.aab"
+            mv "$AAB_FILE" "$NEW_NAME"
+            echo "AAB_NAME=$NEW_NAME" >> $GITHUB_OUTPUT
+            echo "AAB_YOLU=$NEW_NAME"
+          else
+            echo "AAB file not found."
+            exit 1
+          fi
+        
+      - name: Upload AAB Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Android-AAB-Fayl
+          path: oyun-snakeibo-release.aab 
